@@ -1,42 +1,38 @@
 name: CI Pipeline
 
-
 on:
- pull_request:
-   branches: [main]
+  pull_request:
+    branches: [main]
 
-
-  jobs:
-   build-and-test:
+jobs:
+  build-and-test:
     runs-on: ubuntu-latest
-
-
     steps:
-     - name: checkout code
-       uses: actions/checkout@v4
+    - name: checkout code
+      uses: actions/checkout@v4
 
-     - name: setup node js
-       uses: actions/setup-node@v4
-       with:
-        node-version: 15.x
+    - name: setup node js
+      uses: actions/setup-node@v4
+      with:
+       node-version: 15.x
 
-     - name: verify node npm
-       run: npm -v
+    - name: verify node npm
+      run: npm -v
 
-     - name: install dependencies
-       working-directory: ./codebase/rdicidr-0.1.0
-       run: npm install --legacy-peer-deps
+    - name: install dependencies
+      working-directory: ./codebase/rdicidr-0.1.0
+      run: npm install --legacy-peer-deps
 
-     - name: run lint
-       working-directory: ./codebase/rdicidr-0.1.0
-       run: npm run lint || true
-
-
-     - name: run test
-       working-directory:  ./codebase/rdicidr-0.1.0
-       run: CI=true npm run test -- --watch=false
+    - name: run lint
+      working-directory: ./codebase/rdicidr-0.1.0
+      run: npm run lint || true
 
 
-     - name: build code
-       working-directory: ./codebase/rdicidr-0.1.0
-       run: npm run build
+    - name: run test
+      working-directory:  ./codebase/rdicidr-0.1.0
+      run: CI=true npm run test -- --watch=false
+
+
+    - name: build code
+      working-directory: ./codebase/rdicidr-0.1.0
+      run: npm run build
